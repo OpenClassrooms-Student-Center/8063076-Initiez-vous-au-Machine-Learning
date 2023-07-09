@@ -1,20 +1,28 @@
 # sections
 ## Comprenez l’intérêt du Machine Learning
-    Ce n’est plus une nouvelle le ML est partout. Quelques exemples frappants du ML au quotidien. ML par rapport à la Data Science et à l'IA. Motivation du cours, motivation de l'apprenant et but du projet de machine learning.
+    __Ce n’est plus une nouvelle le ML est partout. Quelques exemples frappants du ML au quotidien. ML par rapport à la Data Science et à l'IA. Motivation du cours, motivation de l'apprenant et but du projet de machine learning.__
 
-ML est une vielle techno, annees 50,
-Apres differentes periodes de tattonements, l'IA a un premier printemps en 2000 et depuis l'IA n'a cessé de s'ameliorer.
-le ML est la brique de base de l'IA, le moteur dans la voiture, les rouages de l'eolienne et le sujet de ce cours.
-IA, ML, Data science ?
-l'IA est le domaine generale, la data science, le projet qui va du besoin business a la mise en production, et le ML la methode qui developpe des modeles predictifs.
-le ML est le moteur de multiples services et applications que nous utilisons tous les jours. de spotify, netflix, les reseaux sociaux mais aussi la surveullance, la detection de fraude, la santé etc etc  la liste est longue
-et depuis ... 2022 le tsunami de l'IA generative (chaatGPT, MidJourney etc ) concrétise une IA du quotidien dans nos vies personnelles et professionnelles.
-Nous nageons en pleine science fiction. Exciting!
-Dans ce cours nous allons focus sur la brique de base, le moteur de l'IA, le machine learning dit classique.
-Le machine learning classique consiste a développer des modeles de predictions a partir de jeux de donnees de taille petite ou faible.
-On parle de données tabulaires. de données qui rentre dans un tableu de donnees excel ou google spreadsheet.
-On ne parle pas de données audio, image, video ni d'IA generative
-Donc a la base du ML est la donnée! la data!
+Sans remonter au Turque méchanique du 17e siècle, on peut dire que
+L'intelligence artificielle est née en 1957 avec l'invention du Perceptron, première machine de classification automatique d'images.
+S'ensuivi divers époques, printemps aussitot suivis d'hivers de l'IA, et ce n'est qu'avec l'explosion dans les 20 dernières années de la puissance de calcul et de stockage des ordinateurs que l'IA a vraiment pris racine dans notre quotidien.
+
+IA est un terme générique qui englobe aussi bien les craintes de fin du monde que l'ingénierie logicielle de pointe.
+Dans ce cours, nous parlerons uniquement de machine learning ou apprentissage automatique.
+- Le ML est la brique de base de l'IA, la chaîne dans le vélo, le moteur dans la voiture, l'outil ... .
+- Le ML a pour but une tache precise: la prédiction.
+- Le ML utilise des algorithmes pour developper des modeles predictifs à partir de jeux de données.
+
+Cette fonction prédictive est polymorphe et s'appelle selon les besoins classification, supervision, detection, proposition, prévision ... mais à la base il y a toujours un élément de prédiction.
+
+C'est de cette profusion de modèles prédictifs dont nous profitons. Push de contenu sur les plateformes, surveillance globale, évaluation des risques, IA générative, optimisation des chaînes de production et de ventes, detection des anomalies, prévisions temporelles etc etc
+
+Dans ce cours nous allons travailler sur le machine learning dit classique qui se nourrit de données de petite taille qui tiennent dans un tableu de donnees excel ou google spreadsheet.
+On va donc laisser les données de type audio, images, vidéo et l'IA générative au deep learning et  au réseaux de neurones.
+
+
+Vous avez à votre disposition des jeux de données, des librairies de machine learning exhaustive et bien documentées (scikit-learn), des plateformes de travail (google colab) et ... A vous de jouer!!!
+
+A la base du ML, se trouve le jeu de données ou dataset. Sans data, pas de ML!
 
 ## Découvrez les 2 approches en modélisation: stats vs ML;
     Il y a différentes façons d’approcher un problème concrétisé par un jeu de données.
@@ -23,27 +31,44 @@ Donc a la base du ML est la donnée! la data!
     Conséquence directe des 2 approches : utiliser toute la donnée disponible ou en garder une partie pour l'évaluation du modèle.
     Modèle black box ou explicatif; sklearn ou statsmodel
 
-Soit donc un  jeu de données, provenant d'une equipe, d'un outil ...
-Vous etes le data dude et on vous pose 2 questions
-- comportement: qui sont les gens qui s'abonnenet le plus et quand
-- prediction: on voudrait predire si un user va s'abboner ou non ?
+Soit donc un  jeu de données, collecté par des chercheurs, recuperé a partir d'un outil, d'un capteur ...
 
-Une de ces questiosn a potentillement une reponse ML, l'autre c'est des stats.
+Vous etes responsable des donnees une plateforme de contenu  en ligne dont le revenu depend des abonnements souscrit et on vous pose 2 questions
 
-La modélisation statistique vise principalement à comprendre les relations entre les variables et à effectuer des inférences statistiques.
-hypothese => tests => validation. on est dans le domaine du A/B testing,etc
+- comportement: quel est le profil des utilisaturs qui s'abonnent
+- prediction: comment predire si un nouvel utilisateur va s'abonner ou non
+dasn les 2  cas la variable cible est clair, c'est l'action de s'abonner. variable binaire
+
+Mais c'est 2 questions correspondent chacune a une approche differente. modelisation statistique ou modelisation predictive.
+
+Dans la question sur le comportemntn, on cherche a savoir comment epxliquer l'acte d'abonnement en fonction des caracteristiques des utilisateur.
+On est dans une demarche de cmprehension de la dynamique entre les variables, d'interpretation. est ce que l'age, le revenu, le telephone utilisé influence la probabilite d'abonnement? C'est l'approche statistique qui va chercher a expliciter les relatiosn entre les variables dans un but explicatif, analytique.
+
 Elle s'appuie sur des hypothèses et des modèles statistiques pour analyser les données et tester des hypothèses spécifiques.
- tests d'hypothèses et les intervalles de confiance pour évaluer la signification statistique des résultats.
- l'interprétation des résultats et la compréhension des relations causales entre les variables.
+tests d'hypothèses et les intervalles de confiance pour évaluer la signification statistique des résultats.
 
-le ML se concentre généralement sur la prédiction et la classification des données. Elle cherche à développer des modèles qui peuvent généraliser à partir des données existantes pour faire des prédictions sur de nouvelles données.
-l'interprétation des résultats et la compréhension des relations causales entre les variables.
-approche black box
 
-Donc en ML la question est toujours: comment predire
-dans un cas on interprete, dans l'autre on prédit
-et on interprete si cela est possible
-certains modeles de ML se prete plus ou moins a une interpretation a posteriori. c'est aussi un prerequis specifique dans certaines industries.
+
+Dans la question de prediction, on ne cherche pas a savoir le pourquoi mais simplement a predire efficacement l'acte d'abonnement. C'est l'approche machine learning. que l'on peut aussi qualifier de boite noire. L'important est la qualité  de la prediction (la performance du modèle) et sa capacité a performer sur des données nouvelles, sa robustesse  ou capacité de generalisation au dela du dataset d'entrainement.
+
+La modélisation statistique elle vise principalement à comprendre les relations entre les variables et à effectuer des inférences statistiques.
+l'interprétation des résultats et la compréhension des relations entre les variables.
+
+le ML se concentre sur la prédiction. Elle cherche à développer des modèles qui peuvent généraliser à partir des données existantes pour faire des prédictions sur de nouvelles données.
+
+tableau recap
+
+stats
+- expliquer, analyser
+- tous les echantillons
+- statsmodel
+
+ML
+- predire,
+- etre capable de generaliser a de nouvelles données:
+- performance, resilience et robustesse du modele.
+- une partie des echantillon est reservé a l'evaluation des performance du  modele
+- scikit-learn
 
 
 
@@ -53,21 +78,28 @@ certains modeles de ML se prete plus ou moins a une interpretation a posteriori.
 
     concepts: entraînement, évaluation, optimisation, généralisation,
 
-Donc ML = predire
-mais comment fais t on
-eu final le processus est assez simple. voici un aperçu
+Le but du ML est de developper un modele predictif a partir d'un jeu de données. mais en pratique comment cela se passe t il?
 
-On part d'un jeu de données que l'on suppose exploitable
-cad il y a du signal, la variable a predire est en partie dictée par les autres variables.
-penser superficie du logement et prix de location, profile utilisateur et detection de fraude, poids de la voiture et impact Co2
+Dans la suite quand on parle de jeux de donnée, pensez a une feuille de type google spreadsheet ou tableur excel. Les variables sont les colonnes, et les echantillons sont les lignes. On distingue la variable cible à prevoir et les autres variables qui permettent potentiellement de predire cette variable cible.
 
-developper un modele de prediction consiste en ces 2 etapes
+On part d'un jeu de données que l'on suppose exploitable, en gros cela veut dire que les variables ont une relation entre elles. on parle de corrélation, de causalité, ... le dataset n'est pas un regroupement totallement aléatoire de données qui auraient  ete collectees ici  ou la.
 
-- le travail sur la donnee: separer la data en 2: une partie entrainement, et une partie servant a la validation. cdela adresse la demande pricipale  que l'on fait a un modele de ML: sa resilience face a de nouvelles données. Le modele doit etre capable de predire sur des donnees nouvelles qu'il n'a pas deja vu. evidemment on suppose (et ce n'est pas toujours le cas) que les donnees nouvelles ressemble (d'un piouint de vue statistque) aux donnees d'entrainement
-- le travail sur les parametres du modele et son optimisation. on entraine un modele avec different parametre pour trouver les aprametres qui offrent la meilleure performance
+Prenons un exemple pour fixer les idées avec un jeux de donnees cpmprenannt l'age, le sexe, la taille et le poids de collégiens. Il semble realiste de supposer que la taille et l'age de l'enfant sont 2 variables fortment liées à son poids.
+Par contre la couleur de ses yeux ou les notes obtenues n'ont' a priori que peu de rapport (corrélation) ou d'influence (causalité) sur sa corpulence.
 
-Evidemment cela pose la question de la performance du modele. quelle metrique, quel critere etc
+Supposons donc que nous ayons un jeux de donnée qui va nous servir a entrainer  un modele predictoif.
+Developper ce modele consiste en ces 2 etapes
 
+- le travail sur la donnee:
+Le but de notre modele va etre de faire des bonnes prediction sur des données qui n'ont pas servi lors de son entrainement. principe de generalisation
+On va donc couper notre jeux de donneee en 2 partie. une partie pour entrainer le modele, et une partie de test des performance du modele sur  des données non vue. C'est un processus apppelé validation croisée que l'on va repeter plusieurs fois pour s'assurer que le modele performe dasn tous les cas de repartition des ehcantillons dans les jeux d'entrainement et de test.
+
+- le travail sur les parametres du modele pour optimiser sa  performance par rapport le jeu de validation. On va modifier les parametres et observer les performances du model dnas chaque cas.
+
+
+Note: parfois pour s'assurer que meme apres beaucoup d'optimisation le modele reste capable de performer sur des données nouvelles on coupe le jeu de données en 3 parties. entrainement, test et une partie validation qui va servir a valider la robustesse du modele un fois l'optimisation sur le jeu de test finie.
+
+Mesurer la performance du modele implique aussi d'avoir definie au prealable une metrique d'evaluation. Cette metrique va dependre de la tache a realiser. classification != regression != ranking
 
 ## Distinguez l’ approche supervisée de l’approche non-supervisée
     Approches  supervisées ou non-supervisées;
@@ -103,10 +135,29 @@ on a donc 3 types de ML classique
 ## À vous de jouer !
     Aller sur UCI et comparer plusieurs datasets (à quelles approches ils correspondent)
 
-Une constante en machine learning est l'existence d'un jeux de donnee exploitable
-Le type du jeux de donnee dicte e queqeu sorte son exploitation
-un bon jeu de donnee possede un dictionnaire de donnee
+Tout modèle predictif repose sur un jeu de données. Sans donnees  pas de ML.
+En 1978, David Aha, étudiant a University of California Irvine a crée un serveur mettant a disposition des jeux de données pour le machine learning. Ce serveur est maintenant une source incontournable des données pour le machine learning avec plus de 600 jeu de données, repertorié par tache et type de donnée et vous allez l'explorer.
 
-en 1978, ... creation d'UCI, repository de dataset
-allez sur UCI, utilisez le filtre et trouvez un jeu de donnee de classification, de regression, de clustering
-regardez le dictionnary du jeux de donnees ...
+- Allez sur le site https://archive.ics.uci.edu/datasets
+- le premier jeux de données est Iris, cliquez sur lavignette vous observez
+    - la  tache: classification
+    - le nombre d'echantillon: 150
+    - le  nombre de variable predictire: attributes: 4
+    - la date de donation: 1 juillet 1988
+    etc
+dans le menuy de gauche utilisez  les filtres p[our trouver les dataset
+- data type: tabular
+- tasK: on retrouve nos 3 grand groupe : classification, regression et clustering
+- cliquez sur l'une des vignettes  et explorez la partie features
+- La page montre les performances de certains algo
+- et les papiers qui utilisent ce dataset (il y en a bien plus )
+
+A votre tour.
+- trouvez un dataset
+- regardez ses variables
+- ses caracteristiques ...
+
+Il y a d'autres sources de dataset, nous reviendrons dessus au chapitre ...
+
+Nous avons beaucoup parlé de modeles dans ce chapitre.
+Nous allons maintenant preciser ce terme fourre tout dans  le contexte du ML.
