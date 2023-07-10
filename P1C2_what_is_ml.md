@@ -2,25 +2,25 @@
 ## Comprenez l’intérêt du Machine Learning
     __Ce n’est plus une nouvelle le ML est partout. Quelques exemples frappants du ML au quotidien. ML par rapport à la Data Science et à l'IA. Motivation du cours, motivation de l'apprenant et but du projet de machine learning.__
 
-Sans remonter au Turque méchanique du 17e siècle, on peut dire que
-L'intelligence artificielle est née en 1957 avec l'invention du Perceptron, première machine de classification automatique d'images.
-S'ensuivi divers époques, printemps aussitot suivis d'hivers de l'IA, et ce n'est qu'avec l'explosion dans les 20 dernières années de la puissance de calcul et de stockage des ordinateurs que l'IA a vraiment pris racine dans notre quotidien.
+Sans pour cela remonter au Turque méchanique du 17e siècle, on peut dire que
+l'intelligence artificielle (IA) est née en 1957 avec l'invention du __Perceptron__, première machine rudimentaire de classification automatique d'images.
+S'ensuivi entre 1960 et 2010 une série de printemps et d'hivers de l'IA en fonction des progrès réalisés et de l'engouement du grand public pour le domaine.
+Ce n'est qu'avec l'explosion dans les dernières années de la puissance de calcul et de stockage des ordinateurs que l'IA a vraiment pris racine dans notre quotidien.
 
-IA est un terme générique qui englobe aussi bien les craintes de fin du monde que l'ingénierie logicielle de pointe.
+On parle aujourd'hui, d'IA citoyenne car nous avons à notre disposition des jeux de données, des librairies de machine learning puissantes et bien documentées (scikit-learn), des plateformes de travail en ligne (google colab) et multitudes de cours et tutoriaux. C'est une époque  excitante pour l'IA.
+
+Toutefois, IA est un terme générique qui couvre aussi bien des visions de fin du monde que l'ingénierie logicielle de pointe.
 Dans ce cours, nous parlerons uniquement de machine learning ou apprentissage automatique.
-- Le ML est la brique de base de l'IA, la chaîne dans le vélo, le moteur dans la voiture, l'outil ... .
-- Le ML a pour but une tache precise: la prédiction.
-- Le ML utilise des algorithmes pour developper des modeles predictifs à partir de jeux de données.
 
-Cette fonction prédictive est polymorphe et s'appelle selon les besoins classification, supervision, detection, proposition, prévision ... mais à la base il y a toujours un élément de prédiction.
+- Le ML est la brique de base de l'IA, la chaîne dans le vélo, le moteur dans la voiture, le rouage de l'automate
+- Le ML a une tache précise à accomplir: la **prédiction**.
+- Le ML utilise des **algorithmes** pour développer des modèles prédictifs à partir de **jeux de données**.
 
-C'est de cette profusion de modèles prédictifs dont nous profitons. Push de contenu sur les plateformes, surveillance globale, évaluation des risques, IA générative, optimisation des chaînes de production et de ventes, detection des anomalies, prévisions temporelles etc etc
+Cette fonction prédictive est polymorphe et s'appelle selon les besoins aura pour nom classification, supervision, détection, proposition, ranking, prévision ... mais à la base il y a toujours un but de prédiction.
 
-Dans ce cours nous allons travailler sur le machine learning dit classique qui se nourrit de données de petite taille qui tiennent dans un tableu de donnees excel ou google spreadsheet.
-On va donc laisser les données de type audio, images, vidéo et l'IA générative au deep learning et  au réseaux de neurones.
+Nous profitons de cette profusion de modèles prédictifs: proposition de contenu sur les plateformes, prévention et surveillance globale, évaluation des risques, IA générative, optimisation des chaînes de production et de ventes, détection des anomalies, prévisions temporelles etc etc
 
-
-Vous avez à votre disposition des jeux de données, des librairies de machine learning exhaustive et bien documentées (scikit-learn), des plateformes de travail (google colab) et ... A vous de jouer!!!
+Dans ce cours nous allons travailler sur le machine learning dit classique. Le ML classique se nourrit de jeux de données tabulaires, de taille raisonnable (< 1Gb) et disponibles dans un fichier csv. On va donc laisser, les données plus lourdes, de type audio, images, vidéo, et l'IA générative au deep learning et au réseaux de neurones.
 
 A la base du ML, se trouve le jeu de données ou dataset. Sans data, pas de ML!
 
@@ -31,30 +31,26 @@ A la base du ML, se trouve le jeu de données ou dataset. Sans data, pas de ML!
     Conséquence directe des 2 approches : utiliser toute la donnée disponible ou en garder une partie pour l'évaluation du modèle.
     Modèle black box ou explicatif; sklearn ou statsmodel
 
-Soit donc un  jeu de données, collecté par des chercheurs, recuperé a partir d'un outil, d'un capteur ...
+Imaginons que  vous soyez responsable des données d'une plateforme de contenu en ligne dont le business modèle repose sur le nombre  d'abonnements souscrits. On vous pose 2 questions
 
-Vous etes responsable des donnees une plateforme de contenu  en ligne dont le revenu depend des abonnements souscrit et on vous pose 2 questions
+- Quel est le profil des utilisateurs qui s'abonnent?
+- comment prédire si un nouvel utilisateur va s'abonner ou non
+Dans les 2 cas, on cherche a en savoir plus sur l'acte d'abonnement. variable cible binaire (oui / non).
 
-- comportement: quel est le profil des utilisaturs qui s'abonnent
-- prediction: comment predire si un nouvel utilisateur va s'abonner ou non
-dasn les 2  cas la variable cible est clair, c'est l'action de s'abonner. variable binaire
+Cependant, ces questions imposent des approches différentes: **modélisation statistique** contre **modélisation prédictive**.
 
-Mais c'est 2 questions correspondent chacune a une approche differente. modelisation statistique ou modelisation predictive.
-
-Dans la question sur le comportemntn, on cherche a savoir comment epxliquer l'acte d'abonnement en fonction des caracteristiques des utilisateur.
-On est dans une demarche de cmprehension de la dynamique entre les variables, d'interpretation. est ce que l'age, le revenu, le telephone utilisé influence la probabilite d'abonnement? C'est l'approche statistique qui va chercher a expliciter les relatiosn entre les variables dans un but explicatif, analytique.
-
-Elle s'appuie sur des hypothèses et des modèles statistiques pour analyser les données et tester des hypothèses spécifiques.
-tests d'hypothèses et les intervalles de confiance pour évaluer la signification statistique des résultats.
+Dans la question relative au profil, on cherche à comprendre l'acte d'abonnement en fonction des caractéristiques des utilisateurs.
+On est dans une démarche d'analyse et d'interprétation de la dynamique entre les variables. Cette exploration statistique cherche à expliciter les relations entre les variables dans un but analytique. la modélisation statistique s'appuie sur des tests d'hypothèses et des modèles mathématiques pour évaluer les conclusions de l'analyse.
 
 
+Dans la question relative à la prédiction, on ne cherche qu'à prédire efficacement l'acte d'abonnement. C'est l'approche machine learning.  L'important est la justesse des prédiction. Le modèle est assimilé à une boite noire. La compréhension des predictions vient dans un second temps.
+On attend 2 choses du modèle predictif
+1. Des prédictions de qualité, une bonne performance que l'on va evaluer par une métrique choisie au préalable
+2. la capacité a extrapoler: soit à généraliser ses prédictions à partir des données d'entraînement. On parle de robustesse du modèle face a de nouveaux échantillons.
 
-Dans la question de prediction, on ne cherche pas a savoir le pourquoi mais simplement a predire efficacement l'acte d'abonnement. C'est l'approche machine learning. que l'on peut aussi qualifier de boite noire. L'important est la qualité  de la prediction (la performance du modèle) et sa capacité a performer sur des données nouvelles, sa robustesse  ou capacité de generalisation au dela du dataset d'entrainement.
+Mesurer la performance du modele implique  d'avoir defini au préalable une métrique d'évaluation. Cette metrique va dependre des donnees et de la tache a realiser.
 
-La modélisation statistique elle vise principalement à comprendre les relations entre les variables et à effectuer des inférences statistiques.
-l'interprétation des résultats et la compréhension des relations entre les variables.
-
-le ML se concentre sur la prédiction. Elle cherche à développer des modèles qui peuvent généraliser à partir des données existantes pour faire des prédictions sur de nouvelles données.
+Bien que l'on puisse utiliser les modeles statistiques pour de la prediction, la puissance des modeles ML est sans commune mesure.
 
 tableau recap
 
@@ -78,37 +74,34 @@ ML
 
     concepts: entraînement, évaluation, optimisation, généralisation,
 
-Le but du ML est de developper un modele predictif a partir d'un jeu de données. mais en pratique comment cela se passe t il?
+Le but du ML est donc d'entraîner, un modele prédictif à partir d'un jeu de données. Mais en pratique comment cela se passe t il?
 
-Dans la suite quand on parle de jeux de donnée, pensez a une feuille de type google spreadsheet ou tableur excel. Les variables sont les colonnes, et les echantillons sont les lignes. On distingue la variable cible à prevoir et les autres variables qui permettent potentiellement de predire cette variable cible.
+Encart: Dans la suite quand on parle de jeux de donnée, pensez a une feuille de type google spreadsheet ou tableur excel. Les variables sont les colonnes, et les échantillons sont les lignes. On distingue la variable cible, sujet de la prédiction, des autres variables potentiellement prédictrices.
 
-On part d'un jeu de données que l'on suppose exploitable, en gros cela veut dire que les variables ont une relation entre elles. on parle de corrélation, de causalité, ... le dataset n'est pas un regroupement totallement aléatoire de données qui auraient  ete collectees ici  ou la.
+On part d'un jeu de données que l'on suppose exploitable. Concept fourre tout qui suppose que les variables aient une relation entre elles. Corrélation, causalité, ... le dataset n'est pas un regroupement totalement aléatoire de données qui auraient été collectées on ne sait comment.
 
-Prenons un exemple pour fixer les idées avec un jeux de donnees cpmprenannt l'age, le sexe, la taille et le poids de collégiens. Il semble realiste de supposer que la taille et l'age de l'enfant sont 2 variables fortment liées à son poids.
-Par contre la couleur de ses yeux ou les notes obtenues n'ont' a priori que peu de rapport (corrélation) ou d'influence (causalité) sur sa corpulence.
+Prenons un exemple avec un jeux de données comprenant l'âge, la taille et le poids d'une centaine de collégiens. on suppose raisonnablement que la taille et l'âge d'un enfant sont liées à son poids.
 
-Supposons donc que nous ayons un jeux de donnée qui va nous servir a entrainer  un modele predictoif.
-Developper ce modele consiste en ces 2 etapes
+Voici les étapes pour développer un modèle prédictif à partir de ce dataset.
 
-- le travail sur la donnee:
-Le but de notre modele va etre de faire des bonnes prediction sur des données qui n'ont pas servi lors de son entrainement. principe de generalisation
-On va donc couper notre jeux de donneee en 2 partie. une partie pour entrainer le modele, et une partie de test des performance du modele sur  des données non vue. C'est un processus apppelé validation croisée que l'on va repeter plusieurs fois pour s'assurer que le modele performe dasn tous les cas de repartition des ehcantillons dans les jeux d'entrainement et de test.
+1.  le travail sur la donnée:
+Tout commence par un travail de transformation des données brutes pour les rendre compatibles avec le modele de ML choisi: nettoyage, normalisation, numerisation etc ... On parle de data cleansing.
 
-- le travail sur les parametres du modele pour optimiser sa  performance par rapport le jeu de validation. On va modifier les parametres et observer les performances du model dnas chaque cas.
+Ensuite, on decoupe le dataset en 2.
+Une parti des échantillons (train) sont reservés àl'entrainement du modele tandis que l'autre partie (test) est mise de coté pour évaluer sa performance sur des données qu'il n'a pas vu.   On va d'ailleurs repeter ce decoupage plusieurs fois et de façon aléatoire pour s'assurer que le modele performe dans tous les cas de répartition train / test. Cette methode s'appelle la validation croisée.
 
+En parallele, on va chercher a optimiser la perf du modele en modifiant ses parametres et en observant son scoresur chaque version train / test du dataset.
 
-Note: parfois pour s'assurer que meme apres beaucoup d'optimisation le modele reste capable de performer sur des données nouvelles on coupe le jeu de données en 3 parties. entrainement, test et une partie validation qui va servir a valider la robustesse du modele un fois l'optimisation sur le jeu de test finie.
-
-Mesurer la performance du modele implique aussi d'avoir definie au prealable une metrique d'evaluation. Cette metrique va dependre de la tache a realiser. classification != regression != ranking
 
 ## Distinguez l’ approche supervisée de l’approche non-supervisée
     Approches  supervisées ou non-supervisées;
     Définition d'une variable cible;
     On évalue les modèles différemment selon que l'on soit en supervisé ou non-supervisé
 
-Un distinction importante entre 2 types de ML classique / tabulaire
+Un distinction importante entre 2 types de ML classique sur des données tabulaires.
 
-soit on essaie de predire une des variable, soit on pense que les donneees paartiennnt a plusieurs groupes et on va predire a quelle groupe l'echantillon appartient.
+soit on essaie de predire une des variables du dataset, soit on pense que les donneees appartiennnt a plusieurs groupes et on va predire a quelle groupe l'echantillon appartient.
+
 approche supervisée: je predis le prix de location de l'appartement en fonction de sa superficie, localisation, etage etc
 approche non supervisée, je repartie les appartements en N groupes distinct et le modele associe un appart a un groupe
 une autre distinction dans l'approche supervisée vient de la nature de la variable cible que l'on veut predire
@@ -119,12 +112,17 @@ de classification multi class qund on a plus de 2 categories: on distngue alors 
 peu moyen beaucoup => ordinal
 d'une classification multiclass non ordonnée: chat, chien, mouton
 
+On a parlé de variable cible. En fait ce n'est pas toujours le cas et il faut distinguer en ML l'approche supervisée de l'approche non supervisée
 
-Imaginez que vous ayez un ensemble de photos d'animaux et que vous souhaitiez développer un modèle pour les classifier en fonction des différentes espèces.
+Imaginez que vous avez un ensemble de photos de chats et de chiens. Vous souhaitez les classer automatiquement en utilisant un modele de ML.
+Dans le ML supervisé, il faut que chaque image de votre  dataset soit etiquetée en chat ou en chien. cette etiquette est la variable cible que vous allez chercher a predire. Cette etiquetage est le plus realisé par un humain et peut prendre beaucopp de temps et necessiter beaucoup de resources sur des jeux de donnees avec  beaucoup d'echantillons. On parle de processus supervisé car le modèle apprend à partir d'exemples étiquetés fournis par un humain.
 
-Dans le machine learning supervisé, vous auriez besoin d'un ensemble de données étiquetées où chaque photo est associée à l'espèce de l'animal correspondant. Par exemple, vous auriez des photos d'éléphants, de lions, de girafes, etc., avec les étiquettes correspondantes. À partir de cet ensemble de données étiquetées, vous entraînez un modèle qui apprend à reconnaître les caractéristiques communes de chaque espèce. Ensuite, vous pouvez utiliser ce modèle pour prédire l'espèce d'un nouvel animal sur la base de ses caractéristiques. C'est un processus supervisé car le modèle apprend à partir d'exemples étiquetés fournis par un humain.
+En revanche, dans l'approche non supervisé, vous n'avez pas d'étiquettes pour les photos. Le modele va essayer de regrouper automatiquement les photos en fonction de leurs caractéristiques similaires. Il regroupe les en grappes / cluster sans aucune connaissance préalable sur les espèces
+On parle alors de clustering.
 
-En revanche, dans le machine learning non supervisé, vous n'avez pas d'étiquettes pour les photos. Vous avez simplement un ensemble de données contenant des photos d'animaux, mais sans information sur les espèces spécifiques. Dans ce cas, vous pouvez utiliser des techniques de clustering, telles que le clustering k-means, pour regrouper automatiquement les photos en fonction de leurs caractéristiques similaires. Le modèle recherche des similitudes entre les photos et les regroupe en clusters sans aucune connaissance préalable sur les espèces. Vous pouvez ensuite analyser les clusters formés pour obtenir des informations sur les différentes catégories d'animaux qui pourraient être présentes dans les données.
+En fin dans l'approche supervisé en fonction de la nature de la variable cible, on parlera de
+- classification lorsqu'on predit des categories: binaire (oui/non), ordinal (petit, moyen, grand) ou nominales (chat - chien - brebis , bleu-rose-vert-blanc, ...)
+- et de regression lorsque l'on predit une variable continue: prix, âge, salaire, volume, temperature etc
 
 En résumé, le machine learning supervisé nécessite des données étiquetées pour entraîner le modèle à prédire des valeurs spécifiques, tandis que le machine learning non supervisé cherche à trouver des structures ou des groupements inhérents aux données sans avoir d'informations spécifiques à prédire.
 
