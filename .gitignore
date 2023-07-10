@@ -1,0 +1,9 @@
+
+.DS_store
+__pycache__/
+
+
+.ipynb_checkpoints
+
+.~lock.*
+~$*
