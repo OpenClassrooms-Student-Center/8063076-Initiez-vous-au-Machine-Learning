@@ -1,0 +1,45 @@
+{
+  "fields": [
+    {
+      "name": "Année",
+      "title": "Année",
+      "type": "string",
+      "rdfType": "http://schema.org/description"
+    },
+    {
+      "name": "Véhicule",
+      "title": "Véhicule",
+      "type": "string"
+    },
+    {
+      "name": "Carburant",
+      "title": "Carburant",
+      "type": "string"
+    },
+    {
+      "name": "Roulage",
+      "title": "Roulage",
+      "type": "string"
+    },
+    {
+      "name": "CO_(g/km)",
+      "title": "CO (g/km)",
+      "type": "number"
+    },
+    {
+      "name": "HC_(g/km)",
+      "title": "HC (g/km)",
+      "type": "number"
+    },
+    {
+      "name": "NOx_(g/km)",
+      "title": "NOx (g/km)",
+      "type": "number"
+    },
+    {
+      "name": "Particules_(g/km)",
+      "title": "Particules (g/km)",
+      "type": "number"
+    }
+  ]
+}
