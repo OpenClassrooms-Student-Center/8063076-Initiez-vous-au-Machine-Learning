@@ -1,53 +1,102 @@
-
-P1C5 : Passez d'une problématique business à la mise en production
-Étape 1 : définir les spécifications à partir de la problématique business
-Le processus itératif d’un projet data science, de la traduction de l’objectif business en problématique data à la mise en production dans un produit en passant par le modélisation ML.
-Etape 2 : concevoir le prototype et la faisabilité du projet
-On se concentre sur les étapes ML qui consistent en: collecte des données + sélection du modèle et de l’objectif + entraînement + optimisation + prédictions.
-Illustration de chaque brique avec scikit-learn
-Etape 3 : mettre le projet en production
-MLops: Les challenges de la mise en production; drift des modèles, majs automatiques, optimisation des coûts; resilience;
-quels sont les outils; le rôle du ML engineer
-
-Du notebook au script; les plateformes de gestion des expériences, détection du drift et hosting. Le but est de montrer que le ML ne se limite pas a des notebooks python et a scikit-learn mais que derrière il y a tout un  écosystème que le  ML engineer doit connaître. sans faire peur.
+# P1C5 : Passez d'une problématique business à la mise en production
+## Étape 1 : définir les spécifications à partir de la problématique business
+    Le processus itératif d’un projet data science, de la traduction de l’objectif business en problématique data à la mise en production dans un produit en passant par le modélisation ML.
+## Etape 2 : concevoir le prototype et la faisabilité du projet
+    On se concentre sur les étapes ML qui consistent en: collecte des données + sélection du modèle et de l’objectif + entraînement + optimisation + prédictions.
+    Illustration de chaque brique avec scikit-learn
+##Etape 3 : mettre le projet en production
+    MLops: Les challenges de la mise en production; drift des modèles, majs automatiques, optimisation des coûts; resilience;
+    quels sont les outils; le rôle du ML engineer
+    Du notebook au script; les plateformes de gestion des expériences, détection du drift et hosting. Le but est de montrer que le ML ne se limite pas a des notebooks python et a scikit-learn mais que derrière il y a tout un  écosystème que le  ML engineer doit connaître. sans faire peur.
 
 
 
-Le processus itératif d'un projet de data science implique plusieurs étapes, allant de la traduction de l'objectif business en une problématique data à la mise en production d'un modèle de machine learning dans un produit. Voici les étapes clés :
+## Étape 1 : définir les spécifications à partir de la problématique business
 
-    Compréhension du problème : Il s'agit de comprendre les objectifs et les besoins de l'entreprise. Le data scientist doit travailler en étroite collaboration avec les parties prenantes pour traduire ces objectifs en une problématique data spécifique.
+Prenons un peu de recul avant de clore cette partie plutôt théorique.
 
-    Collecte des données : Cette étape consiste à identifier et à collecter les données pertinentes nécessaires pour résoudre la problématique définie. Les données peuvent provenir de diverses sources, telles que des bases de données internes, des fichiers externes ou des API.
+Un projet de data science à 3 grandes phases: conception, modélisation et production.
 
-    Exploration et préparation des données : Les données collectées doivent être explorées, nettoyées et préparées pour l'analyse. Cela comprend le traitement des valeurs manquantes, l'élimination des valeurs aberrantes, la normalisation des variables et d'autres techniques de prétraitement des données.
+La phase de conception a pour but de traduire une problématique business, un besoin ou un produit en projet ML.
 
-    Modélisation : À cette étape, les techniques de machine learning sont appliquées aux données préparées. Différents modèles sont testés et évalués pour trouver celui qui répond le mieux à la problématique définie. Cela peut inclure des modèles de régression, de classification, de clustering ou d'autres approches.
+De façon très générique, il faut au minimum:
 
-    Évaluation du modèle : Une fois que le modèle est entraîné, il doit être évalué en utilisant des métriques appropriées. Cela permet de mesurer sa performance et d'identifier les éventuelles améliorations à apporter.
+- des données, qui soient pertinentes,
+- un sujet ou un produit qui soit proprement défini,
+- montrer qu'il y a un net avantage à exploiter la modélisation prédictive au lieu d'une solution plus simple.
 
-    Optimisation et itération : Si le modèle ne donne pas les résultats souhaités, il est nécessaire d'optimiser les paramètres, d'ajuster les hyperparamètres et de réitérer les étapes de modélisation et d'évaluation jusqu'à obtenir un modèle satisfaisant.
+Une simple série de règles apporte souvent une solution plus simple et parfois d'efficacité comparable. En anglais on parle de rule based solutions.
 
-    Mise en production : Lorsque le modèle a été validé et optimisé, il est prêt à être déployé dans un environnement de production. Cela implique d'intégrer le modèle dans un produit ou un système existant, de mettre en place des pipelines de traitement des données et de garantir la disponibilité et la performance du modèle.
+Un projet de ML est complexe. Avant de se lancer, il faut pouvoir calculer le gain réellement apporté par une démarche ML.
+Cela implique de réaliser une étude de benchmark au préalable. Cette étude préliminaire permet aussi de définir ce qui constitue le succès du projet. Comment mesurer la performance du système, la métrique, et quel score est nécessaire d'obtenir pour réaliser les objectifs du projet.
 
-    Surveillance et maintenance : Une fois en production, le modèle doit être surveillé en continu pour détecter les éventuels problèmes ou dégradations de performance. Des mises à jour périodiques et des ajustements peuvent être nécessaires pour maintenir la qualité du modèle.
+Voici quelques exemple de benchmark:
 
-Le processus itératif de data science implique généralement des allers-retours entre ces étapes, avec une amélioration progressive du modèle en fonction des résultats obtenus et des retours d'expérience.
+- Prédiction météo: on prédit que le temps du lendemain sera le même que la veille. C'est simple et cela marche souvent bien dans certaines latitudes mais n'a évidemment que peu de dimension vraiment prédictive.
+- prédiction du prix d'une course de taxi: la distance * prix/km donne une bonne approximation du prix final, mais ne prend pas en  compte la dimension temps, les aléas du parcours etc ...
+- une estimation des ventes d'un produit basée sur la moyenne des 3 derniers mois devrait donne une estimation raisonnable des ventes futures.
+
+- dans le cals d'une classification binaire
+
+Dans tous ces cas, on pourra choisir comme métrique de scoring une mesure de la différence entre la valeur estimée et la valeur observée.
+
+Par contre, les projets suivant auront du mal à voir le jour sans une bonne dose de ML
+
+- prédire la défaillance d'une pièce ou d'un serveur, ou le risque de défaut d'un crédit
+- classer automatiquement des sons ou des images
+- détecter des contenus agressifs ou des fakes news sur les réseaux sociaux
+
+La collecte préalable des données va permettre de s'assurer de leur disponibilité.
+Au-delà des contraintes apportées par les règlements européens (RGPD) et français (CNIL), les données bancaires, de santé ou relatives aux savoir-faire industriels seront plus difficiles d'accès que d'autres.
+Enfin, la propriété des données doit aussi être prise en compte. Des données scrapées d'un site ne pourront constituer la base d'une offre commerciale. Donc de nombreux obstacles avant de pouvoir entrainer le moindre modèle.
+
+Enfin, une fois ces données collectées, il faut s'assurer qu'elles soient bien exploitables.
+- Y a-t-il du signal dans les échantillons?
+- Sait-on ce que représente réellement les variables
+- Quelles est la couleur du cheval blanc d'Henri 4?
+
+Donc tout un travail en amont pour pouvoir aboutir enfin à l'étape de modélisation et de machine learning.
+
+## Etape 2 : concevoir le prototype et la faisabilité du projet
+
+Une fois fixée une version du jeu de données, et une indication de benchmark de performance à dépasser, le but de l'étape de machine learning est d'obtenir un modèle qui soit
+
+- performant: bon score vis à vis de la métrique choisie
+- et robuste: stable face à des nouvelles données. En fonction du contexte, on pourra privilégier un modèle moins performant mais plus résilient face aux variabilités des données qu'un modèle plus performant mais plus sensible aux variations.
+
+Les étapes de machine learning vont constituer en une série d'itérations des étapes suivantes:
+
+- travail de mise en forme de la data
+	- data cleaning: résoudre les outliers et les données manquantes
+	- feature engineering: créer de nouvelles variables à partir de variables existante (prendre le carré ou le long d'un prix)
+	- numérisation des données catégoriques, textuelles ou images pour être ingérable par un modèle
+- choix du type de modele: GLM, Tree, NN ou autre
+- stratégie de repartition des données avec une partie réservée pour l'entrainement et l'autre pour la validation
+- optimisation des parametres du modele
+
+Nous reviendrons en détail sur ces différentes  étapes dans les prochains chapitres.
+Il s'agit d'un processus itératif. avec des va et viens entre la colecte des données, la reprise des objectifs et leur quantification,
+la mise en forme des données, le choix des algo etc
 
 
-La mise en production d'un modèle de machine learning peut présenter plusieurs défis. Voici quelques-uns des principaux challenges :
 
-1. Scalabilité : Assurer que le modèle puisse gérer efficacement de grandes quantités de données en temps réel. Le modèle doit être capable de fonctionner de manière performante et fiable, même avec une augmentation de la charge de travail.
+##Etape 3 : mettre le projet en production
 
-2. Infrastructure et déploiement : Configurer une infrastructure adaptée pour héberger et déployer le modèle de manière efficace. Cela peut inclure des considérations telles que la gestion des ressources, le dimensionnement automatique, la résilience et l'intégration dans les systèmes existants.
+Le modèle une fois optimisé a vocation à être mis en production, cad intégré dans le produit / le service.
+C'est alors le travail des MLOps et des DEVOps qui vont prendre en charge la mise en production dans le cloud, la maintenance informatique et la surveillance des modèles.
 
-3. Gestion des versions : Gérer les différentes versions du modèle pour faciliter les mises à jour et le suivi des performances au fil du temps. Il est important de pouvoir revenir à des versions précédentes en cas de besoin et de maintenir un suivi précis des modifications apportées.
+Pour bien comprendre l'importance de cette étape, pensez à la mise en production de centaines voir de milliers de modèles, qui doivent être automatiquement et en parallèl:
 
-4. Monitoring : Mettre en place des mécanismes de surveillance pour suivre les performances du modèle en production. Cela permet de détecter les dégradations de performance, les erreurs et les comportements inattendus, afin de prendre des mesures correctives appropriées.
+- mis à niveau
+- re-entraînés
+- déployés
+- surveillés
 
-5. Explicabilité : Les modèles de machine learning peuvent être considérés comme des "boîtes noires" difficiles à interpréter. Il est important de pouvoir expliquer les décisions prises par le modèle, en particulier dans des domaines sensibles où une transparence est requise (par exemple, dans les décisions médicales ou financières).
+Le MLOps est la contraction de DevOps (développement et opérations) et de ML. Le rôle du MLOps consiste à opérationnaliser les modèles de ML en production.
 
-6. Sécurité et confidentialité : Garantir la sécurité des données utilisées par le modèle et protéger la confidentialité des informations sensibles. Les mesures de sécurité appropriées doivent être mises en place pour prévenir les attaques ou les fuites de données potentielles.
+Au-delà des tâches d'intégration et de systématisation, le MLOPs va devoir surveiller / monitorer les modèles en production.
+« Rien n'est permanent, sauf le changement », il est donc probable que les conditions sous-jacentes aux données d'entraînement du modèle ne seront que transitoires. Les modèles risquent à un moment de perdre de leur efficacité et il faudra les ré-entraîner, les modifier (nouvelles variables) et les redéployer.
 
-7. Maintenance et mise à jour : Assurer la maintenance continue du modèle en mettant à jour les dépendances, en appliquant des correctifs de sécurité et en ré-entraînant régulièrement le modèle avec de nouvelles données pour maintenir sa performance au fil du temps.
+On parle alors de drift du modèle.
 
-La mise en production d'un modèle de machine learning est un processus complexe qui nécessite une collaboration étroite entre les équipes de data science, de développement et d'exploitation. La compréhension de ces défis et leur gestion appropriée sont essentielles pour garantir le déploiement réussi et la performance continue du modèle en production.
+Pensez aux crises mondiales récentes, guerres, pandémies, bouleversement climatique, qui ont et continuent de chambouler de nombreux modèles de prédiction.
