@@ -106,10 +106,14 @@ if True:
     k_means = KMeans(init="k-means++", n_clusters=n_clusters, random_state = 808 , n_init = 'auto'  )
     k_means.fit(X)
     print(k_means.cluster_centers_)
+    print("score", k_means.score(X))
 
+    from sklearn.metrics import silhouette_score
+    k_means_labels = k_means.predict(X)
+    print("silhouette_score: ", silhouette_score(X,k_means_labels ))
+    print("silhouette_score: ", silhouette_score(X,labels_true ))
 
     # trouver le cluster de chqaue echantillon
-    k_means_labels = k_means.predict(X)
     # k_means_labels = pairwise_distances_argmin(X, k_means.cluster_centers_)
 
 
@@ -183,3 +187,38 @@ if True:
     ax.set_title("KMeans")
     plt.tight_layout()
     plt.show()
+    plt.savefig('./figs/p2c4_03.png')
+
+if False:
+
+    from sklearn.cluster import KMeans
+    from sklearn.metrics import silhouette_score
+
+    centers = [[2, 2], [-2, -2], [2, -2]]
+    X, labels_true = make_blobs(n_samples=3000, centers=centers, cluster_std=0.9)
+
+    silhouette_scores = []
+    for n_clusters in range(2,8):
+        print()
+        print("n_clusters",n_clusters)
+    # n_clusters=3
+        k_means = KMeans(init="k-means++", n_clusters=n_clusters, random_state = 808 , n_init = 'auto'  )
+        k_means.fit(X)
+        print("score", k_means.score(X))
+
+        k_means_labels = k_means.predict(X)
+        print("silhouette_score: ", silhouette_score(X,k_means_labels ))
+        silhouette_scores.append(silhouette_score(X,k_means_labels ))
+
+    fig = plt.figure(figsize=(9, 6))
+
+    ax = fig.add_subplot(1, 1, 1)
+    plt.plot(range(2,8), silhouette_scores)
+    ax.set_title('silhouette scores')
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.set_xlabel('Nombre de clusters')
+    ax.set_ylabel('Coefficient de silhouette')
+    plt.grid()
+    plt.show()
+    plt.savefig('./figs/p2c4_04.png')

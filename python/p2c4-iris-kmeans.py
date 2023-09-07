@@ -6,11 +6,14 @@ import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d  # noqa: F401
 import numpy as np
 
-from sklearn import datasets
 from sklearn.cluster import KMeans
+
+from sklearn.decomposition import PCA
+from sklearn.metrics import silhouette_score
 
 np.random.seed(5)
 
+from sklearn import datasets
 iris = datasets.load_iris()
 X = iris.data
 y = iris.target
@@ -22,25 +25,37 @@ estimators = [
 ]
 
 fig = plt.figure(figsize=(10, 8))
-# titles = ["8 clusters", "3 clusters", "3 clusters, bad initialization"]
+
+titles = [ "8 clusters", "3 clusters", "3 clusters bad init"]
 titles = [ "3 clusters"]
-for idx, ((name, est), title) in enumerate(zip(estimators, titles)):
-    ax = fig.add_subplot(2, 2, idx + 1, projection="3d", elev=48, azim=134)
-    est.fit(X)
-    labels = est.labels_
+colors = ["#FF0000", "#0000FF", "#00FF00","#111111"]
+for idx, ((name, model), title) in enumerate(zip(estimators, titles)):
+    ax = fig.add_subplot(1, 2, idx + 1, projection="3d", elev=48, azim=134)
+
+    model.fit(X)
+    labels = model.labels_.copy()
+    labels[labels==1] = -1
+    labels[labels==0] = 1
+    labels[labels==-1] = 0
+
+    print("score", model.score(X))
+    # k_means_labels = model.labels_
+    print("silhouette_score: ", silhouette_score(X,model.labels_ ))
+
+    # labels = model.labels_
 
     ax.scatter(X[:, 3], X[:, 0], X[:, 2], c=labels.astype(float), edgecolor="k")
 
     ax.xaxis.set_ticklabels([])
     ax.yaxis.set_ticklabels([])
     ax.zaxis.set_ticklabels([])
-    ax.set_xlabel("Petal width")
-    ax.set_ylabel("Sepal length")
-    ax.set_zlabel("Petal length")
+    ax.set_xlabel("Largeur des pétales")
+    ax.set_ylabel("Longueur des sépales")
+    ax.set_zlabel("Longueur des pétales")
     ax.set_title(title)
 
 # Plot the ground truth
-ax = fig.add_subplot(2, 2, 4, projection="3d", elev=48, azim=134)
+ax = fig.add_subplot(1, 2, 2, projection="3d", elev=48, azim=134)
 
 for name, label in [("Setosa", 0), ("Versicolour", 1), ("Virginica", 2)]:
     ax.text3D(
@@ -52,16 +67,19 @@ for name, label in [("Setosa", 0), ("Versicolour", 1), ("Virginica", 2)]:
         bbox=dict(alpha=0.2, edgecolor="w", facecolor="w"),
     )
 # Reorder the labels to have colors matching the cluster results
-y = np.choose(y, [1, 2, 0]).astype(float)
+# y = np.choose(y, [1, 2, 0]).astype(float)
 ax.scatter(X[:, 3], X[:, 0], X[:, 2], c=y, edgecolor="k")
 
 ax.xaxis.set_ticklabels([])
 ax.yaxis.set_ticklabels([])
 ax.zaxis.set_ticklabels([])
-ax.set_xlabel("Petal width")
-ax.set_ylabel("Sepal length")
-ax.set_zlabel("Petal length")
-ax.set_title("Ground Truth")
+ax.set_xlabel("Largeur des pétales")
+ax.set_ylabel("Longueur des sépales")
+ax.set_zlabel("Longueur des pétales")
+ax.set_title("Données réelles")
 
 plt.subplots_adjust(wspace=0.25, hspace=0.25)
+plt.tight_layout()
 plt.show()
+
+plt.savefig('./figs/p2c4_04_iris.png')
