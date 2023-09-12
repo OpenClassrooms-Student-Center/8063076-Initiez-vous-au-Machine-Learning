@@ -1,5 +1,5 @@
 # Contraignez votre modèle
-Après une première passe sur les données,  on essaie d'améliorer le modèle. modifier les paramètres du modèle de régression linéaire / GLM en jouant sur la régularisation L2. introduction de la régularisation comme réglage de la sensibilité / robustesse du modèle.
+Après une première passe sur les données, on essaie d'améliorer le modèle. modifier les paramètres du modèle de régression linéaire / GLM en jouant sur la régularisation L2. introduction de la régularisation comme réglage de la sensibilité / robustesse du modèle.
 # Identifiez les types de sous performances
 Le biais: le modèle est simplement mauvais
 Overfitting ou variance:; Le modèle est trop fortement sensible aux données de training et donc peu performant sur des données nouvelles.
@@ -17,54 +17,55 @@ pallier en régularisant
 Hands on: réduire l'overfit
 dataset avec quelques outliers dans le train ou le test; perf du modèle faible sur data de validation;
 démonstration de l'apport de la cross validation => on obtient de meilleure performances sur le dataset de validation
-choix  des paramètres
+choix des paramètres
 
 ----
+Dans ce chapitre nous allons plonger dans la recherche des meilleurs paramètres d'un modèle dans le but d'accroître ses performances.
 
 On a beaucoup parlé jusqu'à maintenant d'optimisation des modèles sans montrer en quoi cela consiste exactement.
 En effet, les modèles de régression linéaire et logistique n'ont pas de paramètres.
-Dans une régression brute tout dépend des prédicteurs utilisés.
-Il est donc impossible de jouer sur leurs paramètres pour améliorer leur performance.
+Dans une régression linéaire tout dépend des prédicteurs utilisés. Il est donc impossible de jouer sur leurs paramètres pour améliorer leur performance.
 
-Le modèle K-NN a un paramètre principal, le nombre de clusters, et nous avons montré que ...
 
-Dans ce chapitre nous allons plonger dans la recherche des paramètres optimaux d'un modèle dans le but d'accroître ses performances.
+Quand est ce que le modèle sous performe?
 
 Nous avons vu tout au début de ce cours, au chapitre 2, partie 1, que pour évaluer les perfs d'un modèle, on scinde le dataset en 2 sous ensembles: train et test et que l'on évalue la performance d'un modèle par son score sur le sous ensemble de test.
 
-
-On peut bien entendu calculer le score du modèle sur le sous ensemble du train. Ce score (train) aura d'ailleurs tendance à être meilleur que les scores(test). En effet, entraîner le modèle consiste à lui faire apprendre la dynamique (patterns) dans les échantillons d'entraînement. On suppose que ces dynamiques internes aux données seront similaires sur le sous-ensemble de test ou une fois en production sur les données réelles qu'il devra prédire. C'est l'hypothèse de base de toute le machine learning.
-La similarité des distributions au sens statistique des sous-ensemble d'entraînement de test et de production.
-
-Ces 2 scores sur les données d'entraînement ou de test vont nous permettre d'identifier les 2 cas où le modèle n'est pas satisfaisant et celui où le modèle est bon.
-
 Dans la suite on note score(train) et score(test) les scores du modèle sur les données d'entraînement et de test.
 
-1. Le modèle est simplement mauvais
+On peut aussi calculer le score du modèle sur le sous ensemble d'entrainement. Ce score(train) aura d'ailleurs tendance à être meilleur que le score(test). En effet, entraîner le modèle consiste à lui faire apprendre la dynamique et les relations entre les variables dans les échantillons d'entraînement. On suppose que ces relations sont pareils au sens statistique, sur le sous-ensemble de test aussi bien que sur les données réelles qu'il devra prédire une fois mis en production. C'est l'hypothèse de base de toute le machine learning: la similarité des distributions statistiques des sous-ensemble d'entraînement, de test et de production.
 
-Il n'arrive pas  a comprendre les données d'entraînement
-Cela se traduira directement par un mauvais  score(train).
-Si les données d'entraînement sont incomprises alors par conséquence directe, les données de test seront aussi incomprise
-donc le score(test) sera faible
+Ces 2 scores sur les données d'entraînement et de test vont nous permettre d'identifier un modèle bon d'un modèle mauvais.
+
+1. Le modèle ne comprends rien aux données
+
+Son score(train) est faible, il n'arrive simplement pas à comprendre les données d'entraînement.
+Conséquence directe, les données de test seront aussi incomprise, donc le score(test) sera faible
+
 On parle dans ce cas de biais du modèle.
 
 2. Le modèle est bon et sait généraliser
 
-Dans ce cas, les 2 scores score(train) et score(test) seront bons. Your job is done! Prochaine étape production!
+Les score(train) et score(test) sont satisfaisants. Woohooo! Your job is done! Prochaine étape production!
 
-3. Le modèle apprend mais ne peut pas généraliser
+3. Le modèle ne sait pas généraliser
 
-Ce qui se traduit par un bon score(train) mais un mauvais score(test)
+Le score(train) est bon mais le score(test) est faible.
 
-On appelle cela l'overfit, le sur-apprentissage. le modèle colle trop aux données d'apprentissage et ne sait pas extrapoler aux données non déjà rencontré.
-Nous allons voir comment détecter l'overfit et le corriger.
+Le modèle colle trop aux données d'apprentissage et ne sait pas extrapoler aux données non déjà rencontré.
 
-Le quatrième cas, bon score(test) mais mauvais score(train) reflète surtout une anomalie statistique et n'arrive normalement pas ou très peu.
+On appelle cela l'overfit, le sur-apprentissage.
+
+Le quatrième cas, bon score(test) mais mauvais score(train) reflète la plupart du temps une anomalie statistique et arrive très rarement.
+
+On peut illustrer ces 3 cas par la figure suivante
+
+img/biais-overfit.png
 
 
-L'optimisation du modèle par le jeu paramètres aura pour unique but de trouver le juste milieu entre le biais et l'over fit.
+L'optimisation du modèle par le jeu de ses paramètres consiste à trouver le juste milieu entre le biais et l'overfit.
 
-Nous allons illustrer tout cela ainsi que les remèdes potentiels pour pallier les faiblesses du modèle en biais ou overfit.
+Nous allons illustrer tout cela ainsi que les remèdes potentiels pour pallier les faiblesses du modèle en biais ou en overfit.
 
 Mais avant, fourbissons nos armes. Il nous faut un dataset et un modèle qui dépendent de paramètres.
 
@@ -73,120 +74,144 @@ Le code prend trop de place ici, il est disponible dans le notebook du chapitre.
 
 Nous allons essayer d'entraîner un modèle qui prédit le stade de développement de l'arbre. n
 Un cas de classification a 4 catégories que nous avons déjà vu: ['Jeune (arbre)', 'Jeune (arbre)Adulte', 'Adulte', 'Mature']
+Dans le dataset, ces categories sont numérisées en 1,2,3 et 4.
 
-En ce qui concerne le modèle, nous allons anticiper sur la partie 4 du cours et utiliser un arbre de décision comme classificateur.
-Le modele DecisionTreeClassifier de scikit-learn
+En ce qui concerne le modèle, nous allons utiliser un arbre de décision comme classificateur.
+En l'occurence, le modele DecisionTreeClassifier de scikit-learn
 https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html
 
-Pourquoi un arbre de décision ? simplement parce que ce type de modèle se  prête parfaitement à la démonstration d'overfitting et de biais. Les modele lineaire de  regression sont incapable d'overfitter autrement que sur des jeu de  donneees jouets, et le KNN serait peu réaliste dans notre contexte.
+Pourquoi un arbre de décision ? Simplement parce que ce type de modèle se prête parfaitement à la démonstration d'overfitting et de biais. Les modele lineaire de regression sont incapable d'overfitter autrement que sur des jeu de donneees jouets, et le KNN serait peu réaliste dans notre contexte.
 
-Un arbre de décision est simplement un enchaînement de règles de classification qui sont établies automatiquement à partir des variables prédictrices.
-On peut représenter un arbre graphiquement comme un arbre la tête en bas. Pour l'instant nous nous contenterons de cette introduction simple.
+Qu'est ce qu'un arbre de décision?
+
+Un arbre de décision est un enchaînement de règles de classification établies automatiquement à partir des variables prédictrices.
+On peut représenter un arbre graphiquement comme un arbre renversé. Pour l'instant nous nous contenterons de cette introduction simple.
 
 Voici un exemple simple
 
 ./img/decision_tree_example.png
+Les décisions de type À des plumes ? sur la figure, sont appelées des noeuds et les liens entre les noeuds, des branches.
+Les noeuds créent des bifurcations de branches.
 
-Dans notre cas, les nœuds de décision correspondant aux règles de décisions se feront sur les statistiques et les mesures des variables. Par exemple
-si hauteur > 10  & libelle = platane => stade de développement = Mature
-L'algorithme d'entraînement détermine  les différentes règles (variable, seuils, valeurs catégoriques) les plus efficaces par rapport  à des critères prédéfinis (le paramètre criterion: The function to measure the quality of a split) .
+Dans notre cas, les règles de bifurcation se feront à partir de critères statistiques sur les variables.
 
-Une caractéristique saute au yeux, le nombre de règles de l'arbre autrement dit la hauteur de l'arbre (on parle plutôt de profondeur vu que l'arbre est a l'envers).
+Par exemple:
 
-Un arbre peu profond (pruning en anglais ou élagage) a peu de règles tandis qu'un arbre profond aura beaucoup de règles.
+si [hauteur_m > 10 & libelle_francais = 'Platane' ]
+Alors stade de développement = Mature
+Sinon [autre regle]
+
+L'algorithme d'entraînement détermine les critères des différentes règles (variables concernées, seuils, valeurs catégoriques) qui sont les plus efficaces pour accompagner la tâche de classification. L'algorithme répond à un critère prédéfini pour établir la regle de bifurcation. Dans la documentation scikit-learn, c'est le paramètre criterion: The function to measure the quality of a split.
+
+Une caractéristique saute au yeux, c'est le nombre de noeuds de l'arbre autrement dit sa profondeur.
+
+Un arbre peu profond a peu de règles, un arbre profond aura beaucoup de règles.
+Pour limiter la profondeur d'un arbre de décision, on parle de pruning en anglais, littéralement: élagage.
 
 img/decision_tree_pruned.png
 img/decision_tree-deep.png
 
-Dans scikit-learn le paramètre s'appelle max depth.
-Et c'est avec ce paramètre que nous allons jouer pour montrer le biais et l'over fit.
+Dans scikit-learn le paramètre qui règle le prunind s'appelle max_depth ("The maximum depth of the tree. ").
+
+C'est avec ce paramètre que nous allons maintenant jouer pour montrer le biais et l'overfit du modèle.
 
 # Tout d'abord le biais.
 
-Loading les données et importons le classificateur
+Chargeons les données et importons le classificateur
 
-df = pd.read_csv ....
+filename = './../data/paris-arbres-numerical-2023-09-10.csv'
+data = pd.read_csv(filename)
+X = data[['domanialite', 'arrondissement', 'libelle_francais', 'genre', 'espece', 'circonference_cm', 'hauteur_m']]
+y = data.stade_de_developpement.values
+
+Scindons les donnees en train et test
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split( X, y, train_size=0.8, random_state=808)
+
 
 Nous utilisons le DecisionTreeClassifier
 
 from sklearn.tree import DecisionTreeClassifier
+
 Limitons la profondeur de l'arbre a 3.
 
 clf = DecisionTreeClassifier(
-	max_depth = 3,
+    max_depth = 3,
 	random_state = 808
 )
 
 
-splittons les donnees en train et test
-
-from sklearn.model_selection import train_test_split
-
-X_train, X_test, y_train, y_test = train_test_split(
-	X, y, train_size=0.8, random_state=0
-)
-
-fittons le modele
+et entrainons le modele
 clf.fit(X_train, y_train)
-et regardons le score. on utilise l'AUC
 
+Pour le score, on utilise l'AUC
+
+from sklearn.metrics import roc_auc_score
 train_auc = roc_auc_score(y_train, clf.predict_proba(X_train), multi_class='ovr')
 test_auc = roc_auc_score(y_test, clf.predict_proba(X_test), multi_class='ovr')
 print("train",train_auc)
 print("test", test_auc)
 
-et la matrice de  confusion
+train 0.89
+test 0.89
 
+et la matrice de confusion
+
+from sklearn.metrics import confusion_matrix
 y_train_hat = clf.predict(X_train)
 y_test_hat = clf.predict(X_test)
 print(confusion_matrix(y_test, y_test_hat))
 
-et le rapport de classification qui donne plusieurs score
+[[ 5570  1402   300     2]
+ [ 1060  3847  2750     8]
+ [  211  1481 13328   466]
+ [    4     7   565   877]]
+
+ainsi que le rapport de classification qui donne plusieurs scores
+
+from sklearn.metrics import classification_report
 print(classification_report(y_test, y_test_hat))
 
-precision	recall  f1-score   support
+precision    recall  f1-score   support
 
-1   	0.82  	0.70  	0.76  	7272
-2   	0.54  	0.50  	0.52  	7654
-3   	0.79  	0.85  	0.82 	15490
-4   	0.62  	0.75  	0.68  	1462
+1       0.81      0.77      0.79      7274
+2       0.57      0.50      0.53      7665
+3       0.79      0.86      0.82     15486
+4       0.65      0.60      0.63      1453
 
-accuracy                       	0.73 	31878
-macro avg   	0.69  	0.70  	0.69 	31878
-weighted avg   	0.73  	0.73  	0.73 	31878
+accuracy                                0.74     31878
+macro avg           0.70      0.68      0.69     31878
+weighted avg        0.73      0.74      0.74     31878
 
-On voit que les précision (le ratio de bonne pioche parmi tous les positifs) pour les différentes classes  ne sont pas très bonnes surtout pour les catégories
-'Jeune (arbre)Adulte', Mature' (resp. 0.54 et 0.62, à peine meilleur qu'un pile ou face)
-et un recall de 0.5 pour la catégorie  Jeune (arbre) (le modèle n'identifie que la moitié des arbres)
+On voit que les précision (le ratio de bonne pioche parmi tous les positifs) pour les différentes classes ne sont pas très bonnes surtout pour les catégories 'Jeune (arbre)Adulte', Mature' (resp. 0.57 et 0.67, à peine meilleur qu'un pile ou face aléatoire)
+et nous observons un recall de 0.5 pour la catégorie 'Jeune (arbre)' (le modèle n'identifie que la moitié des arbres)
 
-ainsi qu'une accuracy de
-clf.score(X_test, y_test)
-0.729
+Donc un modèle qui a besoin de tendresse.
 
-Donc un modele mweh
 
-C'est normal c'est ce que nous voulions.
 Notez cependant que le score sur la partie test est similaire au score sur la partie train
 clf.score(X_train, y_train)
 0.731
+clf.score(X_test, y_test)
+0.74
+
+C'est ce que je voulais vous montrer. C'est un bon exemple d'un modèle biaisé.
 
 
 Quels remèdes pour minimiser le biais du modèle?
 
-2 voies sont à explorer
+Plusieurs voies sont envisageables
 
-- modifier les paramètres du modèle pour améliorer sa performance.
-- ajouter des données. Sur un dataset trop petit, le modèle n'aura pas assez d'exemples pour assimiler  les dynamiques internes. Ajouter des données pourra l'aider.
-On peut soit collecté plus de données et les ajouter au dataset
-soit utiliser des techniques d'augmentation de données qui  créent des échantillons artificiels et gonflent donc artificiellement le dataset d'entraînement. Voir a ce titre ...
-
-- le fameux feature engineering ou l';on va s'efforcer de transformer ou ajouter des variables au dataset pour coder plus d'information exploitable par le modèle.
+- ajouter des données. Sur un dataset trop petit, le modèle n'aura pas assez d'exemples pour assimiler les dynamiques internes. Ajouter des données pourra l'aider. On peut soit collecter plus de données et les ajouter au dataset soit utiliser des techniques d'augmentation de données qui créent des échantillons artificiels et gonflent donc artificiellement le dataset d'entraînement. Voir a ce titre ...
+- le fameux feature engineering ou l'on va s'efforcer de transformer ou d'ajouter des variables pour encoder plus d'information exploitable par le modèle.
+- modifier les paramètres du modèle pour améliorer sa performance. C'est ce que nous allons faire.
 
 Tout cela dépend évidemment du contexte dans lequel vous travaillez.
 
 # L'overfit
 
-reprenons maintenant notre arbre de décision sans limiter sa profondeur. \
+Reprenons maintenant notre arbre de décision mais cette fois sans limiter sa profondeur.
 Pour cela on set max_depth = None
 
 
@@ -194,143 +219,168 @@ clf = DecisionTreeClassifier(
 	max_depth = None,
 	random_state = 808
 )
-le modèle est en effet meilleur on passe de 0.73 à 0.81
+clf.fit(X_train, y_train)
+clf.score(X_train, y_train)
+
+Le modèle est en effet meilleur on passe de 0.73 à 0.81
 
 clf.score(X_test, y_test)
 0.81
 
-mais on  remarque  que sur le sous ensemble d'entraînement on a carrément 0.94!
+mais on remarque que sur le sous ensemble d'entraînement on a carrément 0.94!
 clf.score(X_train, y_train)
 0.935048231511254
 
-Nous sommes bien dans un cas d'overfitting ou le modèle colle aux données d'entraînement. et ne sais pas reproduire la même perf sur les données de test.
+Nous sommes bien dans un cas d'overfitting où le modèle colle aux données d'entraînement (score(train) excellent) et ne sais pas reproduire la même performance sur les données de test (score(test) faible).
 
-Donc à un moment, entre maxdepth = 3 et max+depth = infini, les scores(train) et score(test) ont divergé.
+Donc à un moment, entre maxdepth = 3 et max_depth = infini, les scores(train) et score(test) ont divergé. Il nous faut trouver un juste milieu pour ce paramètre.
 
-Essayons de trouver a quel moment cela est arrivé en faisant croître maxdepth et en enregistrant les 2 score pour chaque valeur,
-l'auc est plus parlant pour cette démo
+Essayons de trouver a quel moment cela est arrivé en faisant croître max_depth et en enregistrant les score sur train et test.
+
+L'auc est plus parlant que l'accuracy pour cette démonstration
 
 scores = []
-for depth in np.arange(2,  30, 2):
-	clf = DecisionTreeClassifier(
-    	max_depth = depth,
-    	random_state = 808
-	)
-	train_auc = roc_auc_score(y_train, clf.predict_proba(X_train), multi_class='ovr')
-	test_auc = roc_auc_score(y_test, clf.predict_proba(X_test), multi_class='ovr')
-	scores.append({
-    	'max_depth': depth,
-    	'train': clf.score(X_train, y_train),
-    	'test': clf.score(X_test, y_test),
-	})
+for depth in np.arange(2, 30, 2):
+    clf = DecisionTreeClassifier(
+      	max_depth = depth,
+      	random_state = 808
+    )
 
-scores = pd.Dataframe(scores)
+    clf.fit(X_train, y_train)
 
-on obtient la figure suivante
+    train_auc = roc_auc_score(y_train, clf.predict_proba(X_train), multi_class='ovr')
+    test_auc = roc_auc_score(y_test, clf.predict_proba(X_test), multi_class='ovr')
+    scores.append({
+      	'max_depth': depth,
+      	'train': clf.score(X_train, y_train),
+      	'test': clf.score(X_test, y_test),
+    })
 
-figs/p3c3_02_overfit.png
+scores = pd.DataFrame(scores)
+
+on obtient la figure suivante avec en abscisse max_depth, en ordonné, AUC
+
+figs/p3c4_02_overfit.png
 
 Que voit on ?
 
-en abscisse max_depth, en ordonné, AUC
 
-Quand on augment max_depth, l'AUC(train) croit jusqu'à presque atteindre un score parfait de 1
-ce score sur train atteint un plateau indiquent qu'augmenter la profondeur / la complexité de l'arbre ne sert plus a rien a partir de max_depth = 15, 16
+Quand on augment max_depth, l'AUC(train) croit jusqu'à presque atteindre un score parfait de 1.
+Ce score sur train atteint un plateau: augmenter la profondeur de l'arbre ne sert plus a rien a partir de max_depth = 20
 
-l'AUC sur  test par contre croît jusqu'à atteindre un maximum autour de 0.94 pour max_depth = 10
-Elle décroît  ensuite jusqu'à 0.87 pour rejoindre elle aussi un plateau vers max_depth = 20
+l'AUC sur test par contre croît jusqu'à atteindre un maximum autour de 0.94 pour max_depth = 9, 10
+Elle décroît ensuite jusqu'à 0.87 pour rejoindre elle aussi un plateau vers max_depth = 20
 
-On voit bien les  3 cas de comportement du modèle
-A gauche, le modèle sous performe
-A droite il overfit
-Au milieu on obtient la meilleure performance sur le test set.
-On a trouvé la valeur optimale du paramètre max_depth pour ce model et ce dataset donné
+On voit bien les 3 cas de comportement du modèle
+- A gauche, le modèle sous-performe. (biais)
+- A droite il overfit
+- Au milieu on obtient la meilleure performance sur le test set.
 
-Comment remedier a l'overfit
+On a ainsi trouvé la valeur optimale du paramètre max_depth pour ce model et ce dataset donné
 
-Un modèle qui overfit est un modèle trop complexe.
-Dans notre contexte complexité = profondeur de l'arbre.
-dans le cas d'une régression, complexité = trop de variable prédictives
+Comment remedier a l'overfit en générale ?
 
-La première stratégie de remédiation sera d'augmenter la taille du dataset d'entraînement. En effet plus il y aura d'échantillon plus la complexité du modèle sera utilisé pour comprendre la masse d'information
+Un modèle qui overfit est un modèle trop complexe.  Dans notre contexte la complexité se traduit par la profondeur de l'arbre.
+Dans le cas d'une régression, la complexité serait traduit par trop de variable prédictives et pour le K-NN, trop de clusters.
 
+La première stratégie de remédiation est d'augmenter la taille du dataset d'entraînement.
+En effet plus il y aura d'échantillon plus la complexité du modèle sera diluée dans la masse d'information
 Mais cela n'est pas toujours possible.
 
-# regularization d'un modele
+
+Ce qui nous amène au concept de régularisation.
+
+--- a mon avis on pourrait splitter le chapitre a ce niveau la. avec un nouveau chapitre qui comprendrait regularisation et corss validation.
+
+# Regularization d'un modele
 
 La régularisation est une technique qui permet de tempérer les ardeurs d'un modèle.
-Elles se présentent sous la forme d'un paramètre que l'on peut régler à souhait.
+Nous allons rajouter une contrainte sur le modele pour qu'il ne puisse pas coller aux données d'entraînement.
 
-Pour mieux comprendre revenons a la regression lineaire mais cette fois avec ce composant de régularisation.
-Dans scikit learn nous avons le modèle Ridge qui est simplement une régression linéaire avec de la régularisation
+Revenons à la regression lineaire mais cette fois en considérant un modèle de regression qui inclu cette composante de régularisation. Dans scikit learn, nous avons le modèle Ridge qui est simplement une régression linéaire avec de la régularisation
 https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html#sklearn.linear_model.Ridge
 
 La documentation de scikit-learn pour le modèle Ridge indique
 
-Minimizes the objective function: ||y - Xw||^2_2 + alpha * ||w||^2_2
+Minimise la fonction de cout: ||y - Xw||^2_2 + alpha * ||w||^2_2
 
-Nous avons vu que définir la fonction de coût permet  de fixer l'objectif d'apprentissage au modèle.
+Nous avons vu que définir la fonction de coût permet de fixer l'objectif d'apprentissage au modèle.
 Dans la régression linéaire simple la fonction de coût est
-||y - Xw||^2_2,  ou y est la variable cible, X la matrice des predicteurs et w représente le vecteur de coefficient de la régression linéaire. la fct de coût est donc la norme quadratique de l'erreur  d'estimation
+||y - Xw||^2_2, ou y est la variable cible, X la matrice des predicteurs et w représente le vecteur de coefficient de la régression linéaire. La fonction de coût est dans ce cas la norme quadratique de l'erreur d'estimation.
 
-Pour RIdge on ajoute un terme alpha * ||w||^2_2 ou alpha est le paramètre du modèle que nous pouvons regler et ||w||^2_2 jour le rôle d'une contrainte sur les coefficients du vecteur de coefficients de la régression.
-Ce terme quand alpha > 0 empêchait les coefficients d'être trop disparate, de diverger. Il lie les coefficients entre eux.
-Le modèle ne va donc pas pouvoir accommoder les variations les plus subtiles du dataset d'entraînement et sera forcé de trouver un juste milieu.
-C'est cette quête du juste milieu qui compense l'overfitting.
+Pour Ridge, on ajoute un terme alpha * ||w||^2_2 ou
+- ||w||^2_2 joue le rôle d'une contrainte sur les coefficients du vecteur de coefficients de la régression. C'est la regularisation du modele.
+- et alpha est le paramètre qui permet de règler l'importance de regularisation
 
-Ce terme de régularisation apparaît soit avec la norme quadratique L2 soit la norme de premier degré L1
-le terme de régularisation de la fonction de coût sera alors  de la forme
-
-alpha * |w| ou |w| est la somme de la valeur absolue des coefficients du vecteur w.
-
-Voilà pour la théorie de la régularisation.
-Ce qu'il faut en retenir c'est que pour les modèles qui offrent ce mode de contrainte sur l'apprentissage,faire  en sorte d'avoir une régularisation (alpha > 0) permet dans la plupart des cas de remédier à la overfit.
-
-Note: dans certains modèles, comme les modeles a base d'arbres ou les réseaux de neurones la régularisation prendre une autre forme que ce terme alpha*||w||^2_2. mais le principe sera le même.
-
-Pour les arbres de décision, régulariser le modèle consiste à limiter la profondeur de l'arbre ou à jouer sur d'autres paramètres que  nous verrons dans le prochain chapitre.
-
-Enfin et pour clore ce chapitre déjà bien long, il nous faut parler de la validation croisée, mentionnée au chapitre ... partie 1.
+Ce terme ||w||^2_2 empêche les coefficients d'être trop disparate, de diverger. Il lie les coefficients entre eux.
+Le modèle ne va donc pas pouvoir accommoder les variations les plus subtiles du dataset d'entraînement et sera forcé de trouver un juste milieu. C'est cette quête du juste milieu qui compense l'overfitting.
 
 
-# validation croisee
+Voilà pour un bref aperçu sur la théorie de la régularisation. Ce qu'il faut en retenir  c'est que la  régularisation quand elle est disponible permet dans la plupart des cas de remédier à la overfit.
 
-Quand on split le dataset en test et train pour évaluer les perf du modèle, et sélectionner les meilleurs paramètres, nous sommes dépendant de la répartition des échantillons entre les datasets de test et de train.
+Note: la regularisation d'un modele peut prendre des formes differentes.
 
-Il se pourrait par un hasard fortuit que certains échantillons pathologiques se retrouvent dans le sous-ensemble de tests. Imaginez par exemple que dans notre Datassette des arbres de Paris, la plupart des arbres au stade matures se retrouvent dans la partie test. Le modèle ne verrai que très peu de ses échantillons de cette catégorie et donc serai bien incapable de prédire des arbres Mature.
+L1 au lieu de L2: Ce terme de régularisation apparaît soit avec la norme quadratique L2 soit la norme de premier degré L1
+le terme de régularisation de la fonction de coût sera alors de la forme alpha * |w| ou |w| est la somme de la valeur absolue des coefficients du vecteur w.
 
-Il faut donc trouver un moyen de s'affranchir de ces anomalies potentielles de répartitions des échantillons entre test  et train set.
-Pour cela on va implémenter la validation croisée.
-- nous allons diviser le dataset  en K sous-ensembles de taille égales
-- et à tour de rôle chaque sous ensemble jouera le rôle de sous ensemble de test, les K-1 autres sous ensembles serviront à entraîner le modèle.
-- pour chaque configuration (entraînements , test) on va calculer le score de performance en fonction des paramètres que nous souhaitons sélectionner
-- et à la fin on choisira le paramètre qui offre la meilleure moyenne des scores
+Pour les arbres de décision, régulariser le modèle consiste à limiter la profondeur de l'arbre ou à jouer sur d'autres paramètres que nous verrons dans le prochain chapitre.
+
+Dans les réseaux de neurones la régularisation prendre une autre forme que . mais le principe sera le même.
+
+
+Enfin  il nous faut parler de la validation croisée, mentionnée au chapitre ... partie 1.
+
+
+# Validation croisée
+
+La repartition arbitraire des ehcantillons en sous ensemble de test et d'entrainement, peut etre problematique si leur caracteristique statistique diverge entre les 2 sous ensemble.
+
+Par un hasard fortuit, certains échantillons pathologiques peuvent se retrouver majoritairement dans un des sous-ensembles.
+
+Imaginez par exemple que dans notre Datassette des arbres de Paris, la plupart des arbres les plus hauts soient dans la partie test.
+Le modèle ne verrait que très peu d'arbres haut pendant l'entrainement et et donc serai bien a la peine pour prédire des arbres de cette nature. Son score(test) serait mauvais.
+
+Il faut donc trouver un moyen.
+
+La validation croisée permet de reduire le risque de ces anomalies potentielles dues a une mauvaise répartition des échantillons entre les sous ensembles de test et d'entrainement
+
+Qu'est ce que la validation croisée ?
+
+- nous allons diviser le dataset en K sous-ensembles de taille égales
+- à tour de rôle chacun des sous-ensembles jouera le rôle de sous-ensemble de test, les K-1 autres sous-ensembles serviront à entraîner le modèle.
+- pour chaque configuration entraînement - test on va calculer le score de performance du modele
+- à la fin on choisira le modele qui offre la meilleure moyenne des scores sur toutes les configurations entrainement - test
 
 img/cross-validation-k-fold.png
 
-La validation croisée ne sert pas qu'à sélectionner les meilleurs paramètres pour une dataset et un modèle donné.
-Elle est utile lors de toute expérience (modification des variables, choix de modèle, ...) qui donne lieu à une décision / une sélection.
+La validation croisée lors de la sélection des paramètres optimaux pour une dataset et un modèle donné.
+Mais elle est aussi utilisée lors de toute expérience (modification des variables, choix de modèle, ...) qui donne lieu à un choix.
 
-scikit-learn offre la methode  KFold
+Il y a de multiples façons de faire de la validation croisée dans scikit learn. C'est même un peu difficile de s'y retrouver.
 
-from sklearn.model_selection import KFold
-kf = KFold(n_splits=3)
-for train, test in kf.split(X):
-	print(f" {train.shape} {test.shape} {train[:3]} -> {train[-3:]}  {test[:3]} -> {test[-3:]}")
-
-Il y a de multiples façons de faire  de  la validation croisée dans scikit learn. C'est même un peu difficile de s'y retrouver.
-Ma méthode préférée, un juste milieu entre automatisation total et implémentation manuelle complète est GridSearchCV
+Ma méthode préférée pour la selection des parametres est GridSearchCV. Elle offre un juste milieu entre automatisation total et implémentation manuelle complète de la méthode.
 https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html
 
+Utilisons la pour trouver la valeur optimal de max_depth sur notre dataset d'arbres.
+
 from sklearn.model_selection import GridSearchCV
-parameters = {'max_depth':np.arange(2,  30, 2)}
+# on defini l'espace des valeurs possibles
+parameters = {'max_depth':np.arange(2, 30, 2)}
+
+# on ne precise par le parametre lorsque l'on instancie le modele
 model = DecisionTreeClassifier(
 	random_state = 808
 )
+# on passe le model et le dictionnaire des paramtres a GridSearchCV
+# cv est le nombre de sous ensemble, de split, de la validationc croisée. On choisit le plus souvent une valeur autour de 5.
 
 clf = GridSearchCV(model, parameters, cv = 5, scoring = 'roc_auc_ovr', verbose = 1)
 clf.fit(X, y)
 
+L'objet clf, permet de voir tout de suite
+- la meilleur valeur des parametres
 print(clf.best_params_)
+- le meilleur score obtenu
 print(clf.best_score_)
+- et le meilleur modele
 print(clf.best_estimator_)
