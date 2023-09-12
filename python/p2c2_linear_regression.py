@@ -8,15 +8,11 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.model_selection import train_test_split
 
-
 input_file = "./../data/advertising.csv"
 
 if  __name__ == "__main__":
 
     df = pd.read_csv(input_file)
-    # print(df.head())
-    # print(df.info())
-    # print(df.describe())
 
     df['tv2'] = df.tv**2
     df['tv_radio'] = df.tv * df.radio
