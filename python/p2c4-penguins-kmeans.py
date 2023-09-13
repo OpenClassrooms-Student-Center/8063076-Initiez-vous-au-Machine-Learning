@@ -22,11 +22,6 @@ for col in ['species', 'island','sex']:
 
 penguins.dropna(inplace = True)
 
-# from sklearn.decomposition import PCA
-# pca = PCA(n_components=2)
-# print("-- PCA")
-# X = pca.fit_transform(penguins[['island', 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex', 'year']])
-
 print("-- raw")
 X = penguins[['island', 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex', 'year']].values
 y = penguins.species.values

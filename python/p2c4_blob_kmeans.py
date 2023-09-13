@@ -108,27 +108,10 @@ if True:
     print("silhouette_score: ", silhouette_score(X,k_means_labels ))
     print("silhouette_score: ", silhouette_score(X,labels_true ))
 
-    # trouver le cluster de chqaue echantillon
-    # k_means_labels = pairwise_distances_argmin(X, k_means.cluster_centers_)
-
 
     fig = plt.figure(figsize=(12, 6))
     colors = ["#4EACC5", "#FF9C34", "#4E9A06","#111111"]
     colors = ["#FF0000", "#0000FF", "#00FF00","#111111"]
-    # colors = [
-    #     "#FF0000",  # Red
-    #     "#FFA500",  # Orange
-    #     "#FFFF00",  # Yellow
-    #     "#008000",  # Green
-    #     "#00FF00",  # Lime
-    #     "#00FFFF",  # Cyan
-    #     "#0000FF",  # Blue
-    #     "#800080",  # Purple
-    #     "#FF00FF",  # Magenta
-    #     "#FF1493",  # Deep Pink
-    #     "#8B4513",  # Saddle Brown
-    #     "#696969"   # Dim Gray
-    # ]
 
     # KMeans
     ax = fig.add_subplot(1, 2, 1)
@@ -141,8 +124,6 @@ if True:
     ax.spines['left'].set_position('zero')
     ax.spines['bottom'].set_linestyle('dotted')
     ax.spines['left'].set_linestyle('dotted')
-    # ax.spines['bottom'].set_alpha(0.5)
-    # ax.spines['left'].set_alpha(0.5)
 
     # Customize the appearance of grid lines (dotted and alpha=0.5)
     ax.xaxis.grid(True, linestyle='--', alpha=0.5)
@@ -170,8 +151,6 @@ if True:
     ax.spines['left'].set_position('zero')
     ax.spines['bottom'].set_linestyle('dotted')
     ax.spines['left'].set_linestyle('dotted')
-    # ax.spines['bottom'].set_alpha(0.5)
-    # ax.spines['left'].set_alpha(0.5)
 
     # Customize the appearance of grid lines (dotted and alpha=0.5)
     ax.xaxis.grid(True, linestyle='--', alpha=0.5)
