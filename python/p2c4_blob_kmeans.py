@@ -42,11 +42,6 @@ if False:
         ax.set_title(item['title'])
         n +=1
         ax.axis('off')
-        # ax.spines['top'].set_visible(False)
-        # ax.spines['right'].set_visible(False)
-        # ax.spines['bottom'].set_visible(False)
-        # ax.spines['left'].set_visible(False)
-
 
     plt.tight_layout()
     plt.show()
