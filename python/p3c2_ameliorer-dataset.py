@@ -203,7 +203,7 @@ if __name__ == "__main__":
 
 
 
-        fig = plt.figure(figsize=(12, 12))
+        fig = plt.figure(figsize=(12, 9))
         ax = fig.add_subplot(3,2, 1)
         ax.hist(df.hauteur_minmax, bins = 100)
         ax.set_title('Hauteur MinMax')
@@ -234,4 +234,6 @@ if __name__ == "__main__":
         ax.set_title('Circonférence log')
         ax.grid()
 
+        plt.tight_layout()
         plt.show()
+        plt.savefig("./figs/p3c2_04_recap.png")

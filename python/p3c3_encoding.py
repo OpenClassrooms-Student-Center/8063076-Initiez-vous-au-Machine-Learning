@@ -42,3 +42,4 @@ if __name__ == "__main__":
     stade = encoder.fit_transform(df.stade_de_developpement)
     stade.value_counts()
     df['stade_de_developpement'] = stade.copy()
+    df['stade_de_developpement'].value_counts()
