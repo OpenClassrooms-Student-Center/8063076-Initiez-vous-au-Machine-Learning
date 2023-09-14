@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     df = data[data.libelle_francais == 'Platane'].copy()
 
-    if True:
+    if False:
         # outliers
         df = data[data.libelle_francais == 'Platane'].copy()
 
@@ -178,3 +178,60 @@ if __name__ == "__main__":
         plt.tight_layout()
 
         plt.savefig("./figs/p3c2_03_log.png")
+
+
+    if True:
+        # figure  recapitulative
+        dataset_url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/8063076-Initiez-vous-au-Machine-Learning/master/data/paris-arbres-clean-2023-09-10.csv"
+        data = pd.read_csv(dataset_url)
+        df = data[data.libelle_francais == 'Platane'].copy()
+
+        df = df[~df.stade_de_developpement.isna() & (df.circonference_cm !=  0) & (df.hauteur_m != 0) & (df.circonference_cm < 1000) & (df.hauteur_m < 100)].copy()
+        from sklearn.preprocessing import StandardScaler, MinMaxScaler
+        minmax_scaler = MinMaxScaler()
+        df['hauteur_minmax'] = minmax_scaler.fit_transform(df.hauteur_m.values.reshape(-1, 1))
+        df['circonference_minmax'] = minmax_scaler.fit_transform(df.circonference_cm.values.reshape(-1, 1))
+
+        # Z-score
+        standard_scaler = StandardScaler()
+        df['hauteur_standard'] = standard_scaler.fit_transform(df.hauteur_m.values.reshape(-1, 1))
+        df['circonference_standard'] = standard_scaler.fit_transform(df.circonference_cm.values.reshape(-1, 1))
+
+        # log
+        df['circonference_log'] = np.log(df.circonference_cm + 1)
+        df['hauteur_log'] = np.log(df.hauteur_m + 1)
+
+
+
+        fig = plt.figure(figsize=(12, 12))
+        ax = fig.add_subplot(3,2, 1)
+        ax.hist(df.hauteur_minmax, bins = 100)
+        ax.set_title('Hauteur MinMax')
+        ax.grid()
+
+        ax = fig.add_subplot(3,2, 2)
+        ax.hist(df.circonference_minmax, bins = 100)
+        ax.set_title('Circonférence MinMax')
+        ax.grid()
+
+        ax = fig.add_subplot(3,2, 3)
+        ax.hist(df.hauteur_standard, bins = 100)
+        ax.set_title('Hauteur Z-score')
+        ax.grid()
+
+        ax = fig.add_subplot(3,2, 4)
+        ax.hist(df.circonference_standard, bins = 100)
+        ax.set_title('Circonférence Z-score')
+        ax.grid()
+
+        ax = fig.add_subplot(3,2, 5)
+        ax.hist(df.hauteur_log, bins = 100)
+        ax.set_title('Hauteur log')
+        ax.grid()
+
+        ax = fig.add_subplot(3,2, 6)
+        ax.hist(df.circonference_log, bins = 100)
+        ax.set_title('Circonférence log')
+        ax.grid()
+
+        plt.show()
