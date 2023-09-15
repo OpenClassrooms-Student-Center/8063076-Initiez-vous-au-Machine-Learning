@@ -10,13 +10,13 @@ import matplotlib.pyplot as plt
 
 centers = [[1, 1], [-1, -1], [1, -1]]
 
-if False:
+if True:
     colors = ["#4EACC5", "#FF9C34", "#4E9A06","#111111"]
 
     fig = plt.figure(figsize=(18, 6))
 
     groups = {
-        'coh_near' : {'centers': [[0.2, 0.2], [-0.2, -0.2], [0.2, -0.2]], 'std_': 0.2, 'title': "denses et collés", 'n_samples': 3000},
+        'coh_near' : {'centers': [[0.2, 0.2], [-0.2, -0.2], [0.2, -0.2]], 'std_': 0.1, 'title': "denses et collés", 'n_samples': 5000},
         'disp_far' : {'centers': [[4, 4], [-4, -4], [4, -4]], 'std_': 1.9, 'title': "dispersés et éloignés", 'n_samples': 1500},
         'coh_far' : {'centers': [[2, 2], [-2, -2], [2, -2]], 'std_': 0.5, 'title': "denses et éloignés", 'n_samples': 3000},
     }
@@ -91,7 +91,7 @@ if False:
 
 # ---
 
-if True:
+if False:
 
     centers = [[2, 2], [-2, -2], [2, -2]]
     X, labels_true = make_blobs(n_samples=3000, centers=centers, cluster_std=0.9)
