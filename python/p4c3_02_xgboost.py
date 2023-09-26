@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from sklearn import datasets, ensemble
+from sklearn.datasets import make_hastie_10_2
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import log_loss
 from sklearn.model_selection import train_test_split
 
-from sklearn.metrics import roc_auc_score
 
-X, y = datasets.make_hastie_10_2(n_samples=4000, random_state=1)
+X, y = make_hastie_10_2(n_samples=4000, random_state=1)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8, random_state=0)
 
