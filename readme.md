@@ -4,7 +4,7 @@ Repo pour le cours d'Ppenclassrooms Initiez-vous au Machine Learning
 
 par Alexis Perrier
 
-Vous trouveres les datasets dans ./data, les notebooks jupyter dans ./notebooks
+Vous trouverez les datasets dans ./data, les notebooks jupyter dans ./notebooks
 
 PARTIE 1 - Découvrez les grands principes du Machine Learning
 - P1C1 : Tirez un maximum de ce cours
