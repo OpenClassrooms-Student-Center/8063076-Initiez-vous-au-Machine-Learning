@@ -1,4 +1,4 @@
-# Initiez-vous au Machine Learning au machine learning
+# Initiez-vous au Machine Learning
 
 Repo pour le cours d'Ppenclassrooms Initiez-vous au Machine Learning
 
