@@ -1,6 +1,6 @@
 # Initiez-vous au Machine Learning
 
-Repo pour le cours d'Ppenclassrooms Initiez-vous au Machine Learning
+Repo pour le cours d'Openclassrooms Initiez-vous au Machine Learning
 
 par Alexis Perrier
 
